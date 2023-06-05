@@ -61,6 +61,108 @@ The next phase is to view your instance state, click on your instance to view it
 <img width="1262" alt="Screenshot 2023-06-05 082844" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/20e597b6-335f-4794-81ca-1f0f03c826fc">
 
 
+For a web application to work smoothly, it has to include an operating system, a web server, a database, and a programming language. The name LAMP is an acronym of the following programs:
+
+
+
+```
+* Linux Operating System
+* Apache HTTP Server
+* MySQL database management System
+* PHP programming language
+```
+
+### In this project, I will implement a web solution based on LAMP stack on a Linux server by implementing the steps below:
+
+
+
+# Step 1 — Installing Apache and Updating the Firewall
+* We need to Install Apache using Ubuntu’s package manager, apt:
+
+
+```
+$ sudo apt update
+
+$ sudo apt install apache2
+```
+
+
+**To verify that apache2 is running as a Service in our OS, use following command**
+
+```
+ sudo systemctl status apache2
+ 
+ ```
+ 
+ 
+ <img width="1267" alt="Screenshot 2023-06-05 084231" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/e141fc4c-d2bf-445d-880d-e6bcc1082166">
+
+ 
+Before we can receive any traffic by our Web Server, we need to open TCP port 80 which is the default port that web browsers use to access web pages on the Internet
+ 
+To open our port 80, i went back to the instance, clicked on security, clicked on edit inbound rules and i add rules. i added port 80 for http and port 443 https and i cliked on save rules
+
+
+<img width="1100" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/ff91b863-98c5-43bc-a514-96cab2167722">
+
+
+## The server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means ‘from any IP address’).
+ 
+* To verify and check that I can access it locally in our ubuntu shell and from the internet, run:
+
+```
+$ curl http://localhost:80
+or
+$ curl http://127.0.0.1:80
+```
+
+**As an output you can see some strangely formatted test, do not worry, we just made sure that our Apache web service responds to ‘curl’ command with some payload.**
+
+
+Open a web browser of your choice and try to access following url
+
+
+```
+http://<Public-ip-address>:80
+```
+
+
+* If you see the following page, then your web server is now correctly installed and accessible through your firewall. 
+
+
+**see my output:**
+
+<img width="938" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/0a5d434e-d6f2-4831-95ae-ca6ae5f5bed8">
+
+# STEP 2 - Installing MySQL
+
+### We need to install the database system to be able to store and manage data for our website. MySQL is a popular database management system used within PHP environments.
+
+* To install mysql-server, run:
+
+```
+sudo apt -y install mysql-server
+```
+
+* After the installation it is recommended that we run a security script that comes pre-installed with MySQL. This script will remove some insecure default settings and lockdown access to our database system.
+* Start the interactive Script by running:
+
+
+```
+sudo mysql_secure_installation
+```
+
+
+* This will ask if you want to configure the VALIDATE PASSWORD PLUGIN.
+
+
+## Note: Enabling this feature is something of a judgment call. If enabled, passwords which don’t match the specified criteria will be rejected by MySQL with an error. It is safe to leave validation disabled, but you should always use strong, unique passwords for database credentials.
+
+
+
+
+
+
 
 
 
