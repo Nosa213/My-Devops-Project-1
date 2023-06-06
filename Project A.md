@@ -161,6 +161,226 @@ sudo mysql_secure_installation
 
 
 
+Answer Y for yes, or anything else to continue without enabling.
+
+
+```
+VALIDATE PASSWORD PLUGIN can be used to test passwords
+and improve security. It checks the strength of password
+and allows the users to set only those passwords which are
+secure enough. Would you like to setup VALIDATE PASSWORD plugin?
+
+Press y|Y for Yes, any other key for No:
+```
+
+* If you answer “yes”, you’ll be asked to select a level of password validation. Keep in mind that if you enter 2 for the strongest level, you will receive errors when attempting to set any password which does not contain numbers, upper and lowercase letters, and special characters, or which is based on common dictionary words.
+
+
+
+### <p> If we enabled password validation, we’ll be shown the password strength for the root password we just entered and our server will ask if we want to continue with that password. If we are happy with our current password, enter Y for “yes” at the prompt:</p>
+
+
+
+### For the rest of the questions, We press Y and hit the ENTER key at each prompt. This will remove some anonymous users and the test database, disable remote root logins, and load these new rules so that MySQL immediately respects the changes we have made.
+
+
+
+when you are done, you will get this **output:** 
+
+<img width="378" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/218b96fc-2d3c-4dfa-a72c-c4740e83d8d2">
+
+
+* When you're finished, test if you're able to login to the MySQL Console by typing:
+
+```
+sudo mysql
+```
+
+<img width="371" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/df1c9cee-b6e4-4a74-a88a-a7a2fc852621">
+
+
+
+
+* To exit the MySQL Console, type: exit
+
+```
+mysql> exit
+```
+
+### Setting a password for the root MySQL account works as a safeguard, in case the default authentication method is changed from unix_socket to password. For increased security, it’s best to have dedicated user accounts with less expansive privileges set up for every database, especially if we plan on having multiple databases hosted on our server.
+
+
+### *Note*: At the time of this writing, the native MySQL PHP library mysqlnd doesn’t support caching_sha2_authentication, the default authentication method for MySQL 8. For that reason, when creating database users for PHP applications on MySQL 8, we’ll need to make sure they’re configured to use mysql_native_password instead. We’ll demonstrate how to do that later.
+
+
+### Our MySQL server is now installed and secured.
+
+
+* Next, we will install PHP, the final component in the LAMP Stack.
+
+
+
+## Step 3 — Installing PHP
+
+
+### We have Apache installed to serve our content and MySQL installed to store and manage our data. PHP is the component of our setup that will process code to display dynamic content to the final user. In addition to the php package, we’ll need php-mysql, a PHP module that allows PHP to communicate with MySQL-based databases. We’ll also need libapache2-mod-php to enable Apache to handle PHP files. Core PHP packages will automatically be installed as dependencies.
+
+
+* To install these 3 packages at once, run:
+
+
+```
+$ sudo apt -y install php libapache2-mod-php php-mysql
+```
+
+* Once the installation is finished, you can run the following command to confirm your PHP version:
+
+```
+php -v
+```
+
+<img width="500" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/259a4dce-5164-45ad-8a57-8e326bc719b3">
+
+
+* At this point, your LAMP stack is completely installed and fully operational.
+* To test our setup with a PHP Script, it's best to setup a proper Apache Virtual Host to host our website's file and folders.
+Virtual Host allows you to have multiple websites located on a single machine and users of the websites will not even notice it.
+
+
+<img width="744" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/95ec81cb-1aa2-4f59-908c-dd9a88bfc127">
+
+
+
+* We will configure our first Virtual Host in the next step.
+
+
+
+## Step 4 — Creating a Virtual Host for your Website using Apache
+
+In this project, you will set up a domain called projectlamp, but you can replace this with any domain of your choice.
+
+
+Apache on Ubuntu 20.04 has one server block enabled by default that is configured to serve documents from the /var/www/html directory. We will leave this configuration as is and will add our own directory next next to the default one.
+
+
+Create the directory for projectlamp using ‘mkdir’ command as follows:
+
+```
+sudo mkdir /var/www/projectlamp
+```
+
+Next, assign ownership of the directory with the $USER environment variable, which will reference your current user.
+
+```
+$ sudo chown -R $USER:$USER /var/www/projectlamp
+```
+
+* We can now open a new configuration file in Apache’s sites-available directory using our preferred command-line editor. Here, we’ll be using vi
+
+```
+$ sudo vi /etc/apache2/sites-available/projectlamp.conf
+```
+
+This will create a new blank file. Paste in the following bare-bones configuration by hitting on i on the keyboard to enter the insert mode, and paste the text:
+
+
+
+<img width="532" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/0d86e395-49a3-4c2a-b209-ab92100c4b33">
+
+
+
+To save and close the file, simply follow the steps below:
+
+* Hit the esc button on the keyboard
+* Type :
+* Type wq. w for write and q for quit
+* Hit ENTER to save the file
+
+
+#### You can use the *ls* command to show the new file in the sites-available directory
+
+```
+$ sudo ls /etc/apache2/sites-available
+```
+
+
+* see my output
+
+
+<img width="475" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/6513837a-cfd4-4b14-9b75-7edcf3e42a12">
+
+
+
+### With this VirtualHost configuration, we’re telling Apache to serve propitixhomes.local using */var/www/projectlamp* as the web root directory. If we like to test Apache without a domain name, we can remove or comment out the options ServerName and ServerAlias by adding a # character in the beginning of each option’s lines. Adding the # character there will tell the program to skip processing the instructions on those lines.
+
+
+
+You can now use a2ensite command to enable the new virtual host:
+
+```
+$ sudo a2ensite projectlamp
+```
+
+
+<img width="404" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/6553bc8a-186d-451c-8f5e-127386a38a4c">
+
+
+* We might want to disable the default website that comes installed with Apache. This is required if we are not using a custom domain name, because in this case Apache’s default configuration would overwrite our virtual host. To disable Apache’sdefault website use a2dissite command, type:
+
+
+```
+$ sudo a2dissite 000-default
+```
+
+<img width="352" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/032cb8e8-6668-4b9b-8873-193193cf38e7">
+
+
+
+* To make sure your configuration file doesn't contain syntax errors, run :
+
+```
+$ sudo apache2ctl configtest
+```
+
+<img width="482" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/04609b1b-02e6-4231-8bdd-51cd223e28f5">
+
+
+* Finally, reload Apache so these changes take effect:
+
+```
+$ sudo systemctl reload apache2
+```
+
+
+Your new website is now active, but the web root /var/www/projectlamp is still empty. Create an index.html file in that location so that we can test that the virtual host works as expected:
+
+
+* Type and run :
+
+```
+$ sudo vi /var/www/projectlamp/index.html
+```
+
+see my input :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
