@@ -363,6 +363,26 @@ $ sudo vi /var/www/projectlamp/index.html
 
 see my input :
 
+<img width="557" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/1d92cf6d-3954-4f6c-aecb-c9c41dbec564">
+
+
+Now go to your browser and try to open your website URL using IP address:
+
+```
+http://<public-ip-address>:80
+```
+or you can also browse using your public dns. the result is the same
+
+```
+http://<Public-DNS-Name>:80
+```
+
+see my output :
+
+
+
+
+
 
 
 
