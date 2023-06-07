@@ -437,6 +437,28 @@ phpinfo();
 <img width="1095" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/53899d91-5ae1-4b65-9c38-03a2e91d04fe">
 
 
+## When you are finished, save and close the file, refresh the page and you will see a page similar to this :
+
+
+<img width="1091" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/f11222c6-0181-4fe7-accf-1cc4cd9f63a8">
+
+
+* This page provides information about your server from the perspective of PHP. It is useful for debugging and to ensure that your settings are being applied correctly.
+
+* If you can see this page in your browser, then your PHP installation is working as expected.
+
+* After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information about your PHP environment -and your Ubuntu server. You can use rm to do so:
+
+
+```
+$ sudo rm /var/www/projectlamp/index.php
+```
+
+
+
+
+
+
 
 
 
