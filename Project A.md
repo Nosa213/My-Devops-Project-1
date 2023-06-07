@@ -379,6 +379,65 @@ http://<Public-DNS-Name>:80
 
 see my output :
 
+<img width="562" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/03fa23fe-608c-4d4d-9836-bd8d97b405b0">
+
+
+You can leave this file in place as a temporary landing page for your application until you set up an index.php file to replace it. Once you do that, remember to remove or rename the index.html file from your document root, as it would take precedence over an index.php file by default.
+
+
+* To check your Public IP from the Ubuntu shell, run :
+
+```
+$(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 
+$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+```
+
+
+## Step 5 — Enable PHP on the website
+
+
+With the default DirectoryIndex settings on Apache, a file named index.html will always take precedence over an index.php file. This is useful for setting up maintenance pages in PHP applications, by creating a temporary index.html file containing an informative message to visitors. Because this page will take precedence over the index.php page, it will then become the landing page for the application. Once maintenance is over, the index.html is renamed or removed from the document root, bringing back the regular application page.
+
+In case you want to change this behavior, you’ll need to edit the /etc/apache2/mods-enabled/dir.conf file and change the order in which the index.php file is listed within the DirectoryIndex directive:
+
+```
+sudo vim /etc/apache2/mods-enabled/dir.conf
+```
+
+<IfModule mod_dir.c>
+        #Change this:
+        #DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
+        #To this:
+        DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+
+
+After saving and closing the file, you will need to reload Apache so the changes take effect:
+
+```
+$ sudo systemctl reload apache2
+```
+
+
+* Finally, we will create a PHP Script to test the PHP is correctly installed and configured on our Server.
+* Now that we have a custom location to host our website's files and folders, we'll create a PHP test script to confirm that Apache is able to handle and process requests for PHP files.
+* Create a new file named index.php inside our custom web root folder:
+
+```
+$ vim /var/www/projectlamp/index.php
+```
+
+This will open a blank file. Add the following text, which is valid PHP code, inside the file:
+
+```
+<?php
+phpinfo();
+```
+
+<img width="1095" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/53899d91-5ae1-4b65-9c38-03a2e91d04fe">
+
+
+
 
 
 
