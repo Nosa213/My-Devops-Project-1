@@ -443,11 +443,11 @@ phpinfo();
 <img width="1091" alt="image" src="https://github.com/Nosa213/My-Devops-Project-1/assets/125190958/f11222c6-0181-4fe7-accf-1cc4cd9f63a8">
 
 
-* This page provides information about your server from the perspective of PHP. It is useful for debugging and to ensure that your settings are being applied correctly.
+**This page provides information about your server from the perspective of PHP. It is useful for debugging and to ensure that your settings are being applied correctly**.
 
-* If you can see this page in your browser, then your PHP installation is working as expected.
+**If you can see this page in your browser, then your PHP installation is working as expected**.
 
-* After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information about your PHP environment -and your Ubuntu server. You can use rm to do so:
+**After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information about your PHP environment -and your Ubuntu server. You can use rm to do so:**
 
 
 ```
